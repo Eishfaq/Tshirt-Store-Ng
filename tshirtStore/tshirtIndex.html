@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html ng-app="tshirtStore">
+<head>
+    <title></title>
+</head>
+    <body >
+        <div class="container"><h1>T-Shirt Store</h1></div> 
+        <div class="container" ng-controller="tshirtController as tshirt" ng-submit="tshirt.">
+            <div class="col-lg-6">
+                <div class="panel-body " ng-repeat="aTshirt in tshirt.product">
+                    <h3>{{aTshirt.name}}</h3>
+                    <h5><b>Catagory:</b>{{" "+ aTshirt.category}}</h5>
+                    <h5><b>Color:</b>{{" "+ aTshirt.color}}</h5>
+                    <h5><b>Size:</b>{{" "+ aTshirt.size}}</h5>
+                    <h5><b>Price:</b>{{" "+ aTshirt.price | currency}}</h5>
+                    <h5><b>Product No:</b>{{" " + aTshirt.productNo}}</h5>
+                    <section ng-controller="panelController as panel">
+                        <ul class="nav nav-pills">
+                            <li ng-class="{active:panel.isSelected(1)}">
+                                <a href ng-click="panel.selectedTab(1)">Description</a>
+                            </li>
+                            <li ng-class="{active:panel.isSelected(2)}">
+                                <a href ng-click="panel.selectedTab(2)">Review</a>
+                            </li>
+                        </ul>
+                        <div ng-show="panel.isSelected(1)">
+                            <h3>Description</h3>
+                            <cite>{{aTshirt.description}}</cite>
+                        </div>
+                        <div ng-show="panel.isSelected(2)">
+                            <h3>Review</h3>
+                            <blockquote ng-repeat="rev in aTshirt.review">
+                                <b>{{rev.star}} Star</b>
+                                <p>Comment: {{rev.body}}</p>
+                                <cite>Email: {{rev.author}}</cite>
+                            </blockquote>
+
+                            <form name="reviewForm" ng-controller="reviewController as reviewCtrl"
+                                  ng-submit="reviewForm.$valid && reviewCtrl.addReview(aTshirt)">
+                                <blockquote>
+                                    <b>Rate:{{" " + reviewCtrl.review.star}} star</b>
+                                    <p>Comment:{{" " + reviewCtrl.review.body}}</p>
+                                    <cite>E-mail:{{" " + reviewCtrl.review.author}}</cite>
+                                </blockquote>
+                                <fieldset class="form-group">
+                                    <select class="form-control-static" ng-model="reviewCtrl.review.star">
+                                        <option value="">Rate Here</option>
+                                        <option value="1">1 Star</option>
+                                        <option value="2">2 Stars</option>
+                                        <option value="3">3 Stars</option>
+                                        <option value="4">4 Stars</option>
+                                        <option value="5">5 Stars</option>
+                                    </select>
+                                </fieldset>
+
+                                <fieldset class="form-group">
+                                    <h4>Comment</h4>
+                                    <textarea class="form-control" ng-model="reviewCtrl.review.body"></textarea>
+                                </fieldset>
+
+                                <fieldset class="form-group">
+                                    <h4>E-mail</h4>
+                                    <input class="form-group" ng-model="reviewCtrl.review.author" type="email" />
+                                </fieldset>
+
+                                <fieldset>
+                                    <input class="btn btn-success" type="submit" value="Submit" />
+                                </fieldset>
+
+                            </form>
+                        </div>
+                    </section>
+                    <br />
+                    <div class="form-group">
+                        <button class="btn btn-danger" ng-click="addtoCart()">Add To Chart</button>
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="col-lg-6">
+                
+            </div>
+
+        </div>
+        <!--<div class="col-lg-6" ng-controller="tshirtController as tshirt">
+            <form ng-submit="">
+                <h2>Cart</h2>
+            </form>
+        </div>-->
+        
+        
+
+        <script src="Scripts/vendor/angular/angular.min.js"></script>
+        <script src="Scripts/vendor/angular/angular-route.min.js"></script>
+        <link href="Scripts/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="Scripts/app/app.js"></script>
+    </body>
+</html>
